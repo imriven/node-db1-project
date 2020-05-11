@@ -6,6 +6,7 @@ const server = express();
 
 server.use(express.json());
 
+const middlewares = [checkQueryOrder]
 // server.get("/accounts", (req, res)=> {
 //     db("accounts")
 //     .then(results => res.status(200).json(results))
@@ -56,7 +57,7 @@ function checkQueryOrder (req, res, next) {
          next();
 }
 
-const middlewares = [checkQueryOrder]
+
 
 //ocalhost:5000/accounts?limit=3&order=desc&max=5000
 
