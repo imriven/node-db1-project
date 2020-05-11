@@ -21,7 +21,7 @@ update Customers
 set City = 'Silicon Valley', Country = 'USA'
 where CustomerName = 'Lambda School'
 
--- (Stretch) Find a query to discover how many different cities are stored in the Customers table. Repeats should not be double counted
+-- (Stretch) Find a query to discover how many different cities are stored in the Customers table. Repeats should not be double counted //Added in the shire and got 70
 SELECT COUNT(DISTINCT City) FROM Customers;
 
 -- (Stretch) Find all suppliers who have names longer than 20 characters. You can use `length(SupplierName)` to get the length of the name

@@ -6,11 +6,11 @@ const server = express();
 
 server.use(express.json());
 
-server.get("/accounts", (req, res)=> {
-    db("accounts")
-    .then(results => res.status(200).json(results))
-    .catch(err => res.status(500).send())
-}) 
+// server.get("/accounts", (req, res)=> {
+//     db("accounts")
+//     .then(results => res.status(200).json(results))
+//     .catch(err => res.status(500).send())
+// }) 
 
 server.get("/accounts/:id", (req, res)=> {
     db("accounts").where({ id: req.params.id })
@@ -36,4 +36,28 @@ server.delete("/accounts/:id", (req, res)=> {
     .then(results => res.status(204).send())
     .catch(err => res.status(500).send())
 }) 
+
+// Stretch
+
+server.get("/accounts", ...middlewares, (req, res)=> {
+     
+    db("accounts").where("budget", "<", req.query.max).orderBy("budget", req.query.order).limit(req.query.limit)
+    .then(results => {
+        res.status(200).json(results)
+       })
+    .catch(err => res.status(500).send())
+})
+
+function checkQueryOrder (req, res, next) {
+    const goodValues = ["desc", "asc"]
+    if (!goodValues.includes(req.query.order)) {
+        req.query.order = "desc"
+         } 
+         next();
+}
+
+const middlewares = [checkQueryOrder]
+
+//ocalhost:5000/accounts?limit=3&order=desc&max=5000
+
 module.exports = server;
